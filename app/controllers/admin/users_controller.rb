@@ -20,7 +20,7 @@ class Admin::UsersController < ApplicationController
     @user = User.new(user_params)
     @user.assign_role(params[:user][:role])
     if @user.save
-      redirect_to @user, notice: "Usuario creado exitosamente."
+      redirect_to [ :admin, @user ], notice: "Usuario creado exitosamente."
     else
       render :new, status: :unprocessable_entity
     end

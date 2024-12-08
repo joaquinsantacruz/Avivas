@@ -11,16 +11,16 @@ class Admin::CategoriesController < ApplicationController
     else
       @category = Category.new(category_params)
       if @category.save
-        redirect_to categories_path, notice: "Categoría creada exitosamente."
+        redirect_to admin_categories_path, notice: "Categoría creada exitosamente."
       else
-        redirect_to categories_path, alert: "Error: La categoría ya existe."
+        redirect_to admin_categories_path, alert: "Error: La categoría ya existe."
       end
     end
   end
 
   def destroy
     @category.destroy
-    redirect_to categories_path, notice: "Categoría eliminada exitosamente."
+    redirect_to admin_categories_path, notice: "Categoría eliminada exitosamente."
   end
 
   private

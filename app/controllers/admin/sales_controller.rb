@@ -22,7 +22,7 @@ class Admin::SalesController < ApplicationController
     @sale = Sale.new(sale_params)
 
     if @sale.save
-      redirect_to @sale, notice: "Venta creada exitosamente."
+      redirect_to [ :admin, @sale ], notice: "Venta creada exitosamente."
     else
       render :new
     end

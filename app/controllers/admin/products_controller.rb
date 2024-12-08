@@ -4,6 +4,7 @@ class Admin::ProductsController < ApplicationController
   # GET /products
   def index
     @products = Product.all
+    @products = @products.where.not("name LIKE ?", "*%")
   end
 
   # GET /products/1
@@ -26,7 +27,7 @@ class Admin::ProductsController < ApplicationController
     @product.category_ids = category_ids
 
     if @product.save
-      redirect_to @product, notice: "Producto creado exitosamente."
+      redirect_to [ :admin, @product ], notice: "Producto creado exitosamente."
     else
       @categories = Category.all
       render :new
@@ -46,7 +47,7 @@ class Admin::ProductsController < ApplicationController
 
     if @product.update(product_params)
       @product.category_ids = category_ids
-      redirect_to @product, notice: "Producto actualizado exitosamente."
+      redirect_to [ :admin, @product ], notice: "Producto actualizado exitosamente."
     else
       @categories = Category.all
       render :edit
@@ -57,9 +58,11 @@ class Admin::ProductsController < ApplicationController
 def destroy
   # Marcar el producto como eliminado lógicamente al anteponer un '*' al nombre
   @product.update(name: "*#{@product.name}")
+  @product.update(available_stock: 0)
+  @product.update(deleted_date: Time.now)
 
   # Redirigir al listado de productos con un mensaje de éxito
-  redirect_to products_url, notice: "Producto eliminado exitosamente."
+  redirect_to admin_products_url, notice: "Producto eliminado exitosamente."
 end
 
 
@@ -71,6 +74,6 @@ end
 
     # Only allow a list of trusted parameters through.
     def product_params
-      params.require(:product).permit(:name, :description, :unit_price, :available_stock, :size, :color, :entry_date, :deleted_date, image_ids: [], category_ids: [])
+      params.require(:product).permit(:name, :description, :unit_price, :available_stock, :size, :color, :entry_date, :deleted_date, images: [], category_ids: [])
     end
 end

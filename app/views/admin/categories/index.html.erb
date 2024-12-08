@@ -27,7 +27,7 @@
       <tr>
         <td><%= category.name %></td>
         <td>
-          <%= form_with(model: category, method: :delete, local: true) do |form| %>
+          <%= form_with(model: category, url: admin_category_path(category), method: :delete, local: true) do |form| %>
             <%= form.submit 'Eliminar', data: { confirm: '¿Estás seguro de que quieres eliminar esta categoría?' }, class: 'btn btn-danger' %>
           <% end %>
         </td>
