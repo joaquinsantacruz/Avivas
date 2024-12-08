@@ -1,0 +1,37 @@
+<h1>Categorías</h1>
+
+<% if alert %>
+  <div class="alert alert-danger">
+    <%= alert %>
+  </div>
+<% end %>
+
+<!-- Formulario para agregar nueva categoría -->
+<%= form_with model: Category.new, url: admin_categories_path, local: true, id: "category-form" do |form| %>
+  <div>
+    <%= form.text_field :name, placeholder: "Nombre de la categoría", required: true %>
+    <%= form.submit "Agregar", class: "btn btn-primary" %>
+  </div>
+<% end %>
+
+<!-- Listar categorías -->
+<table>
+  <thead>
+    <tr>
+      <th>Nombre</th>
+      <th>Acciones</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @categories.each do |category| %>
+      <tr>
+        <td><%= category.name %></td>
+        <td>
+          <%= form_with(model: category, method: :delete, local: true) do |form| %>
+            <%= form.submit 'Eliminar', data: { confirm: '¿Estás seguro de que quieres eliminar esta categoría?' }, class: 'btn btn-danger' %>
+          <% end %>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

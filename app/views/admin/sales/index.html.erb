@@ -1,0 +1,33 @@
+<h1>Ventas</h1>
+
+<%= link_to 'Nueva Venta', new_admin_sale_path %>
+
+<table>
+  <thead>
+    <tr>
+      <th>ID</th>
+      <th>Fecha de realización</th>
+      <th>Monto total</th>
+      <th>Cliente</th>
+      <th>Empleado</th>
+      <th>Acciones</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @sales.each do |sale| %>
+      <tr>
+        <td><%= sale.id %></td>
+        <td><%= sale.realization_date %></td>
+        <td><%= number_to_currency(sale.total_amount) %></td>
+        <td><%= sale.costumer_name %> (<%= sale.costumer_dni %>)</td>
+        <td><%= sale.employee.username %></td>
+        <td>
+          <%= link_to 'Ver', admin_sale_path(sale) %> |
+          <%= link_to 'Editar', edit_admin_sale_path(sale) %> |
+          <%= link_to 'Eliminar', admin_sale_path(sale), method: :delete, data: { confirm: '¿Estás seguro?' } %>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

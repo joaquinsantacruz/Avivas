@@ -1,0 +1,15 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  realization_date: 2024-12-01 10:36:20
+  total_amount: 9.99
+  employee: one
+  customer_dni: MyString
+  customer_name: MyString
+
+two:
+  realization_date: 2024-12-01 10:36:20
+  total_amount: 9.99
+  employee: two
+  customer_dni: MyString
+  customer_name: MyString

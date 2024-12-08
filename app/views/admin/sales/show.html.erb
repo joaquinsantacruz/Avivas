@@ -1,0 +1,29 @@
+<h1>Detalles de la Venta</h1>
+
+<p><strong>ID:</strong> <%= @sale.id %></p>
+<p><strong>Fecha de realización:</strong> <%= @sale.realization_date %></p>
+<p><strong>Monto total:</strong> <%= number_to_currency(@sale.total_amount) %></p>
+<p><strong>Cliente:</strong> <%= @sale.costumer_name %> (<%= @sale.costumer_dni %>)</p>
+<p><strong>Empleado:</strong> <%= @sale.employee.username %></p>
+
+<h3>Productos</h3>
+<table>
+  <thead>
+    <tr>
+      <th>Producto</th>
+      <th>Cantidad vendida</th>
+      <th>Monto total</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @sale.product_sales.each do |product_sale| %>
+      <tr>
+        <td><%= product_sale.product.name %></td>
+        <td><%= product_sale.amount_sold %></td>
+        <td><%= number_to_currency(product_sale.total_amount) %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<%= link_to 'Volver', admin_sales_path %>

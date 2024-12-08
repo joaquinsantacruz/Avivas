@@ -1,0 +1,51 @@
+<%= form_with(model: user, local: true) do |form| %>
+    <% if user.errors.any? %>
+        <div id="error_explanation">
+            <h2><%= pluralize(user.errors.count, "error") %> impide que este usuario se guarde:</h2>
+            <ul>
+                <% user.errors.full_messages.each do |message| %>
+                <li><%= message %></li>
+                <% end %>
+            </ul>
+        </div>
+    <% end %>
+
+    <div class="field">
+        <%= form.label :username %>
+        <%= form.text_field :username %>
+    </div>
+
+    <div class="field">
+        <%= form.label :email %>
+        <%= form.email_field :email %>
+    </div>
+
+    <div class="field">
+        <%= form.label :phone %>
+        <%= form.text_field :phone %>
+    </div>
+
+    <div class="field">
+        <%= form.label :password %>
+        <%= form.password_field :password %>
+    </div>
+
+    <div class="field">
+        <%= form.label :entry_date %>
+        <%= form.date_field :entry_date %>
+    </div>
+
+    <div class="field">
+        <%= form.label :role, "Rol" %>
+        <% if @user.has_role?(:admin) %>
+            <%= form.collection_select :role_ids, Role.all.map { |r| [r.name.titleize, r.id] }, :second, :first, prompt: "Selecciona un rol" %>
+        <% else %>
+            <%= form.select :role_ids, @user.roles.map { |r| [r.name.titleize, r.id] }, { disabled: true }, prompt: "Seleccionado: #{@user.roles.first.name.titleize}" %>
+        <% end %>
+    </div>
+
+
+    <div class="actions">
+        <%= form.submit %>
+    </div>
+<% end %>
