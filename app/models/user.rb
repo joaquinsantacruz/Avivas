@@ -8,6 +8,10 @@ class User < ApplicationRecord
   validates :username, presence: true, uniqueness: true
   validates :email, presence: true, uniqueness: true
 
+  def can_manage_users?
+    has_role?(:manager) || has_role?(:admin)
+  end
+
   def assign_role(role_name)
     if Role.exists?(name: role_name)
       self.roles = []

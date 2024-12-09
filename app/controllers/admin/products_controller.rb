@@ -1,6 +1,7 @@
 class Admin::ProductsController < ApplicationController
   before_action :set_product, only: %i[show edit update destroy]
   before_action :authenticate_user!, except: [ :show ]
+  load_and_authorize_resource
 
   # GET /products
   def index

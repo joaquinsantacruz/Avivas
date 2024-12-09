@@ -68,3 +68,5 @@ gem "rolify"
 gem "devise", "~> 4.9"
 
 gem "ransack"
+
+gem "cancancan"
