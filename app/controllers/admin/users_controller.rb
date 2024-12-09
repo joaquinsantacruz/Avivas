@@ -49,7 +49,7 @@ class Admin::UsersController < ApplicationController
   # DELETE /users/:id
   def destroy
     @user.destroy
-    redirect_to users_url, notice: "Usuario eliminado exitosamente."
+    redirect_to admin_users_url, notice: "Usuario eliminado exitosamente."
   end
 
   private

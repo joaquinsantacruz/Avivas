@@ -1,35 +1,40 @@
 <%= render 'shared/navbar_private' %>
 
-<h1>Ventas</h1>
+<div class="sales-container table-container">
+  
+  <div class="table-header">
+    <h1>Ventas</h1>
 
-<%= link_to 'Nueva Venta', new_admin_sale_path, class: "btn" %>
+    <%= link_to 'Nueva Venta', new_admin_sale_path, class: "btn new-admin-btn" %>
+  </div>
 
-<table>
-  <thead>
-    <tr>
-      <th>ID</th>
-      <th>Fecha de realización</th>
-      <th>Monto total</th>
-      <th>Cliente</th>
-      <th>Empleado</th>
-      <th>Acciones</th>
-    </tr>
-  </thead>
-
-  <tbody>
-    <% @sales.each do |sale| %>
+  <table class="table">
+    <thead>
       <tr>
-        <td><%= sale.id %></td>
-        <td><%= sale.realization_date %></td>
-        <td><%= number_to_currency(sale.total_amount) %></td>
-        <td><%= sale.costumer_name %> (<%= sale.costumer_dni %>)</td>
-        <td><%= sale.employee.username %></td>
-        <td>
-          <%= link_to 'Ver', admin_sale_path(sale), class: "btn" %> |
-          <%= link_to 'Editar', edit_admin_sale_path(sale), class: "btn" %> |
-          <%= link_to 'Eliminar', admin_sale_path(sale), method: :delete, data: { confirm: '¿Estás seguro?' }, class: "btn" %>
-        </td>
+        <th>ID</th>
+        <th>Fecha de realización</th>
+        <th>Monto total</th>
+        <th>Cliente</th>
+        <th>Empleado</th>
+        <th>Acciones</th>
       </tr>
-    <% end %>
-  </tbody>
-</table>
+    </thead>
+
+    <tbody>
+      <% @sales.each do |sale| %>
+        <tr>
+          <td><%= sale.id %></td>
+          <td><%= sale.realization_date %></td>
+          <td><%= number_to_currency(sale.total_amount) %></td>
+          <td><%= sale.costumer_name %> (<%= sale.costumer_dni %>)</td>
+          <td><%= sale.employee.username %></td>
+          <td>
+            <%= link_to 'Ver', admin_sale_path(sale), class: "btn" %> |
+            <%= link_to 'Editar', edit_admin_sale_path(sale), class: "btn" %> |
+            <%= link_to 'Eliminar', admin_sale_path(sale), method: :delete, data: { confirm: '¿Estás seguro?' }, class: "btn" %>
+          </td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+</div>

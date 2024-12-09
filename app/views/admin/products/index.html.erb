@@ -1,32 +1,43 @@
 <%= render 'shared/navbar_private' %>
 
-<h1>Productos</h1>
+<div class="admin-products-container table-container">
+  
+  <div class="table-header">
+    <h1>Productos</h1>
 
-<%= link_to 'Nuevo Producto', new_admin_product_path, class: "btn" %>
+    <%= link_to 'Nuevo Producto', new_admin_product_path, class: "btn new-admin-btn" %>
+  </div>
 
-<table>
-  <thead>
-    <tr>
-      <th>Nombre</th>
-      <th>Descripción</th>
-      <th>Precio</th>
-      <th>Acciones</th>
-    </tr>
-  </thead>
-  <tbody>
-    <% @products.each do |product| %>
+  <table class="table">
+    <thead>
       <tr>
-        <td><%= product.name %></td>
-        <td><%= product.description %></td>
-        <td><%= product.unit_price %></td>
-        <td>
-          <%= link_to 'Ver', admin_product_path(product), class: "btn" %> |
-          <%= link_to 'Editar', edit_admin_product_path(product), class: "btn" %> |
-          <%= form_with(model: product, url: admin_product_path(product), method: :delete, local: true) do |form| %>
-            <%= form.submit 'Eliminar', data: { confirm: '¿Estás seguro de que quieres eliminar este producto?' }, class: 'delete-btn btn' %>
-          <% end %>
-        </td>
+        <th>Nombre</th>
+        <th>Descripción</th>
+        <th>Precio</th>
+        <th>Talle</th>
+        <th>Color</th>
+        <th>Stock</th>
+        <th>Acciones</th>
       </tr>
-    <% end %>
-  </tbody>
-</table>
+    </thead>
+    <tbody>
+      <% @products.each do |product| %>
+        <tr>
+          <td><%= product.name %></td>
+          <td><%= product.description %></td>
+          <td><%= product.unit_price %></td>
+          <td><%= product.size %></td>
+          <td><%= product.color %></td>
+          <td><%= product.available_stock %></td>
+          <td class="actions">
+            <%= link_to 'Ver', admin_product_path(product), class: "btn" %>
+            <%= link_to 'Editar', edit_admin_product_path(product), class: "btn" %>
+            <%= form_with(model: product, url: admin_product_path(product), method: :delete, local: true) do |form| %>
+              <%= form.submit 'Eliminar', data: { confirm: '¿Estás seguro de que quieres eliminar este producto?' }, class: 'delete-btn btn' %>
+            <% end %>
+          </td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+</div>
