@@ -50,6 +50,21 @@
     <%= form.date_field :entry_date %>
   </div>
 
+  <% if product.images.attached? %>
+  <div class="field">
+    <h3>Imágenes actuales</h3>
+    <ul>
+      <% product.images.each do |image| %>
+        <li>
+          <%= image_tag(image.variant(resize_to_limit: [150, 150])) if image.variable? %>
+          <%= link_to "Eliminar", delete_image_admin_product_path(product, image_id: image.id), method: :delete, data: { confirm: "¿Estás seguro de que deseas eliminar esta imagen?" } %>
+        </li>
+      <% end %>
+    </ul>
+  </div>
+  <% end %>
+
+
   <div class="field">
     <%= form.label :images, "Imágenes (máximo 5)" %>
     <%= form.file_field :images, multiple: true, direct_upload: true %>

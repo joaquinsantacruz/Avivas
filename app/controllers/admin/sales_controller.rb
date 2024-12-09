@@ -1,6 +1,7 @@
 # app/controllers/sales_controller.rb
 class Admin::SalesController < ApplicationController
   before_action :set_sale, only: %i[show edit update destroy]
+  # before_action :authenticate_user!
 
   # GET /sales
   def index

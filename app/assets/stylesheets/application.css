@@ -19,11 +19,16 @@ body {
     background-color: #333;
     color: white;
     padding: 10px;
+    position: fixed;
+    width: 100%;
+    top: 0;
 }
   
 .navbar ul {
+    display: flex;
     list-style-type: none;
     padding: 0;
+    max-width: 60%;
 }
 
 .navbar li {
@@ -41,5 +46,56 @@ body {
 }
 
 .container {
-    margin: 20px;
+    margin-top: 50px;
+    padding: 20px;
+}
+
+.login-main-container {
+    height: 90vh;
+    display: flex;
+    justify-content: center;
+    align-content: center;
+    flex-wrap: wrap;
+}
+
+.login-container {
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    background-color: #f9f9f9;
+    width: 450px;
+}
+
+.new_user {
+    margin: auto;
+    padding: 20px;
+    background-color: #f9f9f9;
+}
+
+.new_user h2 {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.new_user input[type="email"], .new_user input[type="email"], .new_user input[type="password"] {
+    width: 95%;
+    padding: 10px;
+    margin-bottom: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+.login-links {
+    display: flex;
+    justify-content: space-between;
+    margin-right: -120px;
+}
+
+.login-container a {
+    text-decoration: none;
+    color: #333;
+}
+
+.login-container a:hover {
+    text-decoration: underline;
 }

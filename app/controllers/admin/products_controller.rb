@@ -1,5 +1,6 @@
 class Admin::ProductsController < ApplicationController
   before_action :set_product, only: %i[show edit update destroy]
+  # before_action :authenticate_user!, except: [:show]
 
   # GET /products
   def index
@@ -63,6 +64,13 @@ def destroy
 
   # Redirigir al listado de productos con un mensaje de éxito
   redirect_to admin_products_url, notice: "Producto eliminado exitosamente."
+end
+
+def delete_image
+  @product = Product.find(params[:id])
+  image = @product.images.find(params[:image_id])
+  image.purge
+  redirect_to edit_admin_product_path(@product), notice: "Imagen eliminada exitosamente."
 end
 
 

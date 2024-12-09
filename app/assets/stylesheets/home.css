@@ -1,0 +1,130 @@
+.products-container {
+    margin-left: 300px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: left;
+}
+
+.product {
+    background-color: whitesmoke;
+    min-width: 200px;
+    width: 20%;
+    margin: 20px;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+.product p {
+    margin: 5px 0;
+}
+
+.product img {
+    width: 100%;
+    height: 20rem;
+    object-fit: cover;
+    border-radius: 5px;
+}
+
+.sidebar {
+    width: 250px;
+    margin-top: 20px;
+    margin-left: 20px;
+    padding: 20px;
+    background-color: #f4f4f4;
+    border-radius: 8px;
+    height: 80vh;
+    position: fixed;
+    left: 0;
+  }
+  
+  .category-list {
+    list-style-type: none;
+    padding: 0;
+  }
+  
+  .category > a {
+    font-weight: bold;
+    text-decoration: none;
+    color: #333;
+    display: block;
+    padding: 10px;
+  }
+  
+  .category > a:hover {
+    background-color: #ddd;
+  }
+  
+  .dropdown {
+    display: none;
+    list-style-type: none;
+    padding: 0;
+  }
+  
+  .subcategory > a {
+    padding: 8px 15px;
+    display: block;
+    color: #555;
+    text-decoration: none;
+  }
+  
+  .subcategory > a:hover {
+    background-color: #ddd;
+  }
+  
+  .sub-subcategory {
+    display: none;
+    list-style-type: none;
+    padding: 0;
+  }
+  
+  .subcategory:hover .sub-subcategory {
+    display: block;
+  }
+  
+  .category:hover .dropdown {
+    display: block;
+  }
+
+  .sub-subcategory li a {
+    padding: 8px 20px;
+    display: block;
+    color: #555;
+    text-decoration: none;
+  }
+
+.sub-subcategory li a:hover {
+    background-color: #ddd;
+}
+
+.checkbox-container {
+    max-height: 300px; /* Ajusta el alto máximo visible */
+    overflow-y: auto; /* Habilita el scroll vertical */
+    border: 1px solid #ddd; /* Opcional: para distinguir el contenedor */
+    padding: 10px; /* Espaciado interno */
+    border-radius: 5px; /* Opcional: esquinas redondeadas */
+    background-color: #f9f9f9; /* Fondo claro */
+}
+
+.btn {
+    padding: 10px 20px;
+    border-radius: 5px;
+    font-size: 16px;
+    cursor: pointer;
+    background-color: #333;
+    color: white;
+    border: none;
+    margin-top: 10px;
+}
+  
+.btn-primary:hover {
+    background-color: #555;
+}
+
+.filter-checkbox {
+    margin-right: 10px;
+}
+
+.filter-label {
+    margin-bottom: 5px;
+}

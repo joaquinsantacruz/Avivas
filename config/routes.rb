@@ -7,7 +7,11 @@ Rails.application.routes.draw do
   get "up" => "rails/health#show", as: :rails_health_check
 
   namespace :admin do
-    resources :products
+    resources :products do
+      member do
+        delete :delete_image
+      end
+    end
     resources :categories, only: [ :index, :create, :destroy ]
     resources :sales
     resources :users

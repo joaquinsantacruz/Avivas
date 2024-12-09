@@ -14,6 +14,14 @@ class Product < ApplicationRecord
 
   validate :max_5_images
 
+  def self.ransackable_attributes(auth_object = nil)
+    [ "available_stock", "color", "created_at", "deleted_date", "description", "entry_date", "id", "name", "size", "unit_price", "updated_at" ]
+  end
+
+  def self.ransackable_associations(auth_object = nil)
+    [ "categories", "images_attachments", "images_blobs", "product_sales", "sales" ]
+  end
+
   private
 
   def max_5_images

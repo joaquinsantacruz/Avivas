@@ -1,4 +1,4 @@
-<%= form_with(model: user, local: true) do |form| %>
+<%= form_with(model: user, url: user.persisted? ? admin_user_path(user) : admin_users_path, local: true) do |form| %>
     <% if user.errors.any? %>
         <div id="error_explanation">
             <h2><%= pluralize(user.errors.count, "error") %> impide que este usuario se guarde:</h2>
@@ -37,11 +37,7 @@
 
     <div class="field">
         <%= form.label :role, "Rol" %>
-        <% if @user.has_role?(:admin) %>
-            <%= form.collection_select :role_ids, Role.all.map { |r| [r.name.titleize, r.id] }, :second, :first, prompt: "Selecciona un rol" %>
-        <% else %>
-            <%= form.select :role_ids, @user.roles.map { |r| [r.name.titleize, r.id] }, { disabled: true }, prompt: "Seleccionado: #{@user.roles.first.name.titleize}" %>
-        <% end %>
+        <%= form.collection_select :role_ids, Role.all.map { |r| [r.name.titleize, r.id] }, :second, :first, prompt: "Selecciona un rol" %>
     </div>
 
 

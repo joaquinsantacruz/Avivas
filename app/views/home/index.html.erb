@@ -1,2 +1,34 @@
-<h1>Home#index</h1>
-<p>Find me in app/views/home/index.html.erb</p>
+<%= content_for :stylesheets do %>
+  <%= stylesheet_link_tag 'home', media: 'all' %>
+<% end %>
+
+
+<aside class="sidebar">
+<%= form_with url: root_path, method: :get, local: true do |form| %>
+    <h3>Filtrar por categorías</h3>
+    <div class="checkbox-container">
+        <% @categories_with_counts.each do |entry| %>
+        <div>
+            <%= check_box_tag "categories[]", entry[:category].id, params[:categories]&.include?(entry[:category].id.to_s), class: "filter-checkbox" %>
+            <%= label_tag "categories_#{entry[:category].id}", "#{entry[:category].name} (#{entry[:count]})", class: "filter-label" %>
+        </div>
+        <% end %>
+    </div>
+    <%= form.submit "Aplicar filtros", class: "btn btn-primary" %>
+<% end %>
+</aside>
+
+<div class="products-container">
+<% if @message %>
+    <p><%= @message %></p>
+<% else %>
+    <% @products.each do |product| %>
+        <div class="product">
+            <%= image_tag product.images.first.variant(resize_to_limit: [300, 300]) if product.images.any? %>
+            <h2><%= product.name %></h2>
+            <p>Precio: <%= number_to_currency(product.unit_price) %></p>
+            <p>Stock: <%= product.available_stock %></p>
+        </div>
+    <% end %>
+    </div>
+<% end %>

@@ -26,12 +26,15 @@
     <header>
       <nav class="navbar">
         <ul>
-          <li><%= link_to 'Home', root_path %></li>
+          <li><%= link_to 'AVIVAS', root_path %></li>
           <li><%= link_to 'Productos', admin_products_path %></li>
           <li><%= link_to 'Categorías', admin_categories_path %></li>
           <li><%= link_to 'Ventas', admin_sales_path %></li>
           <li><%= link_to 'Usuarios', admin_users_path %></li>
         </ul>
+        <% if user_signed_in? %>
+        <li><%= link_to 'Cerrar sesión', destroy_user_session_path, method: :delete, class: 'btn btn-danger' %></li>
+        <% end %>
       </nav>
     </header>
     <p class="notice"><%= notice %></p>
