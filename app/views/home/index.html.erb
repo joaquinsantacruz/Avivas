@@ -2,6 +2,7 @@
   <%= stylesheet_link_tag 'home', media: 'all' %>
 <% end %>
 
+<%= render 'shared/navbar_public' %>
 
 <aside class="sidebar">
 <%= form_with url: root_path, method: :get, local: true do |form| %>

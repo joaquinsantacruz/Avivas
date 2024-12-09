@@ -1,5 +1,7 @@
+<%= render 'shared/navbar_private' %>
+
 <h1>Nuevo Producto</h1>
 
 <%= render 'form', product: @product %>
 
-<%= link_to 'Volver', admin_products_path %>
+<%= link_to 'Volver', admin_products_path, class: "btn" %>

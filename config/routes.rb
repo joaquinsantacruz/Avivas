@@ -7,6 +7,7 @@ Rails.application.routes.draw do
   get "up" => "rails/health#show", as: :rails_health_check
 
   namespace :admin do
+    root to: "dashboard#redirect_based_on_auth"
     resources :products do
       member do
         delete :delete_image

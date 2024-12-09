@@ -1,6 +1,8 @@
+<%= render 'shared/navbar_private' %>
+
 <h1>Ventas</h1>
 
-<%= link_to 'Nueva Venta', new_admin_sale_path %>
+<%= link_to 'Nueva Venta', new_admin_sale_path, class: "btn" %>
 
 <table>
   <thead>
@@ -23,9 +25,9 @@
         <td><%= sale.costumer_name %> (<%= sale.costumer_dni %>)</td>
         <td><%= sale.employee.username %></td>
         <td>
-          <%= link_to 'Ver', admin_sale_path(sale) %> |
-          <%= link_to 'Editar', edit_admin_sale_path(sale) %> |
-          <%= link_to 'Eliminar', admin_sale_path(sale), method: :delete, data: { confirm: '¿Estás seguro?' } %>
+          <%= link_to 'Ver', admin_sale_path(sale), class: "btn" %> |
+          <%= link_to 'Editar', edit_admin_sale_path(sale), class: "btn" %> |
+          <%= link_to 'Eliminar', admin_sale_path(sale), method: :delete, data: { confirm: '¿Estás seguro?' }, class: "btn" %>
         </td>
       </tr>
     <% end %>

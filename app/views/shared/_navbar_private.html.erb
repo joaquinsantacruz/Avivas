@@ -1,0 +1,14 @@
+<header>
+    <nav class="navbar navbar-priv">
+    <ul>
+        <li><%= link_to 'AVIVAS', root_path %></li>
+        <li><%= link_to 'Productos', admin_products_path %></li>
+        <li><%= link_to 'Categorías', admin_categories_path %></li>
+        <li><%= link_to 'Ventas', admin_sales_path %></li>
+        <li><%= link_to 'Usuarios', admin_users_path %></li>
+    </ul>
+    <%= form_with url: destroy_user_session_path, method: :delete, local: true, class: "logout-form" do |form| %>
+        <%= form.submit "Cerrar Sesión", class: "logout-btn logout-btn-priv" %>
+    <% end %>
+    </nav>
+</header>

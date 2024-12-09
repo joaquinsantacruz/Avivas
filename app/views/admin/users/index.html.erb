@@ -1,6 +1,8 @@
+<%= render 'shared/navbar_private' %>
+
 <h1>Usuarios</h1>
 
-<%= link_to 'Nuevo Usuario', new_admin_user_path %>
+<%= link_to 'Nuevo Usuario', new_admin_user_path, class: "btn" %>
 
 <table>
     <thead>
@@ -23,10 +25,10 @@
             <td><%= user.entry_date %></td>
             <td><%= user.roles.first&.name&.titleize || "Sin rol asignado" %></td>
             <td>
-                <%= link_to 'Mostrar', admin_user_path(user) %> |
-                <%= link_to 'Editar', edit_admin_user_path(user) %> |
+                <%= link_to 'Mostrar', admin_user_path(user), class: "btn" %> |
+                <%= link_to 'Editar', edit_admin_user_path(user), class: "btn" %> |
                 <%= form_with(url: admin_user_path(user), method: :delete, local: true) do %>
-                    <%= submit_tag 'Eliminar' %>
+                    <%= submit_tag 'Eliminar', class: "btn" %>
                 <% end %>
             </td>
         </tr>

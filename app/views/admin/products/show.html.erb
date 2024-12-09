@@ -1,3 +1,5 @@
+<%= render 'shared/navbar_private' %>
+
 <h1><%= @product.name %></h1>
 <p><strong>Descripción:</strong> <%= @product.description %></p>
 <p><strong>Stock Disponible:</strong> <%= @product.available_stock %></p>
@@ -17,5 +19,5 @@
 <% end %>
 
 
-<%= link_to 'Volver', admin_products_path %>
-<%= link_to 'Editar', edit_admin_product_path(@product) %>
+<%= link_to 'Volver', admin_products_path, class: "btn" %>
+<%= link_to 'Editar', edit_admin_product_path(@product), class: "btn" %>

@@ -1,6 +1,8 @@
+<%= render 'shared/navbar_private' %>
+
 <h1>Productos</h1>
 
-<%= link_to 'Nuevo Producto', new_admin_product_path %>
+<%= link_to 'Nuevo Producto', new_admin_product_path, class: "btn" %>
 
 <table>
   <thead>
@@ -18,10 +20,10 @@
         <td><%= product.description %></td>
         <td><%= product.unit_price %></td>
         <td>
-          <%= link_to 'Ver', admin_product_path(product) %> |
-          <%= link_to 'Editar', edit_admin_product_path(product) %> |
+          <%= link_to 'Ver', admin_product_path(product), class: "btn" %> |
+          <%= link_to 'Editar', edit_admin_product_path(product), class: "btn" %> |
           <%= form_with(model: product, url: admin_product_path(product), method: :delete, local: true) do |form| %>
-            <%= form.submit 'Eliminar', data: { confirm: '¿Estás seguro de que quieres eliminar este producto?' }, class: 'delete-btn' %>
+            <%= form.submit 'Eliminar', data: { confirm: '¿Estás seguro de que quieres eliminar este producto?' }, class: 'delete-btn btn' %>
           <% end %>
         </td>
       </tr>

@@ -1,5 +1,7 @@
+<%= render 'shared/navbar_private' %>
+
 <h1>Nuevo Usuario</h1>
 
 <%= render 'form', user: @user %>
 
-<%= link_to 'Volver', admin_users_path %>
+<%= link_to 'Volver', admin_users_path, class: "btn" %>

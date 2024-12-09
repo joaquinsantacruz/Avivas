@@ -15,13 +15,21 @@ body {
     padding: 0;
 }
 
+.navbar-priv {
+    height: 77px;
+    align-items: center;
+}
+
 .navbar {
     background-color: #333;
     color: white;
-    padding: 10px;
     position: fixed;
     width: 100%;
     top: 0;
+    left: 0;
+    display: flex;
+    justify-content: center;
+    font-size: 20px;
 }
   
 .navbar ul {
@@ -34,6 +42,7 @@ body {
 .navbar li {
     display: inline;
     margin-right: 20px;
+    align-self: baseline;
 }
 
 .navbar a {
@@ -45,8 +54,30 @@ body {
     text-decoration: underline;
 }
 
+.search-bar {
+    height: 36px;
+    border: 0;
+    color: #2f2f2f;
+    padding: 0 8px;
+    border-radius: 18px;
+}
+
+.search-btn {
+    margin-left: 8px;
+    padding: 10px;
+    background-color: #333;
+    color: white;
+    border: 1px solid #fff;
+    border-radius: 18px;
+    cursor: pointer;
+}
+
+.search-btn:hover {
+    background-color: #555;
+}
+
 .container {
-    margin-top: 50px;
+    margin-top: 80px;
     padding: 20px;
 }
 
@@ -98,4 +129,29 @@ body {
 
 .login-container a:hover {
     text-decoration: underline;
+}
+
+.logout-form {
+    display: flex;
+}
+
+.logout-btn {
+    right: 0;
+    position: fixed;
+    margin-right: 32px;
+    margin-top: 20px;
+    padding: 10px;
+    background-color: #333;
+    color: white;
+    border: 1px solid #fff;
+    border-radius: 18px;
+    cursor: pointer;
+}
+
+.logout-btn:hover {
+    background-color: #555;
+}
+
+.logout-btn-priv {
+    margin-top: -20px;
 }
