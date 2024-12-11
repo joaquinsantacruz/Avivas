@@ -2,6 +2,52 @@
 
 <h1>Nuevo Usuario</h1>
 
-<%= render 'form', user: @user %>
+<%= form_with(model: @user, url: admin_users_path, local: true) do |form| %>
+    <% if @user.errors.any? %>
+        <div id="error_explanation">
+            <h2><%= pluralize(@user.errors.count, "error") %> impide que este usuario se guarde:</h2>
+            <ul>
+                <% @user.errors.full_messages.each do |message| %>
+                <li><%= message %></li>
+                <% end %>
+            </ul>
+        </div>
+    <% end %>
+
+    <div class="field">
+        <%= form.label :username %>
+        <%= form.text_field :username %>
+    </div>
+
+    <div class="field">
+        <%= form.label :email %>
+        <%= form.email_field :email %>
+    </div>
+
+    <div class="field">
+        <%= form.label :phone %>
+        <%= form.text_field :phone %>
+    </div>
+
+    <div class="field">
+        <%= form.label :password %>
+        <%= form.password_field :password %>
+    </div>
+    
+    <div class="field">
+        <%= form.label :entry_date %>
+        <%= form.date_field :entry_date %>
+    </div>
+
+    <div class="field">
+        <%= form.label :role, "Rol" %>
+        <%= form.collection_select :role_ids, Role.all.map { |r| [r.name.titleize, r.id] }, :second, :first, prompt: "Selecciona un rol" %>
+    </div>
+
+    <div class="actions">
+        <%= form.submit "Crear usuario" %>
+    </div>
+<% end %>
+
 
 <%= link_to 'Volver', admin_users_path, class: "btn" %>

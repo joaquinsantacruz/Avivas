@@ -2,65 +2,82 @@
 
 <h1>Nueva Venta</h1>
 
-<%= form_with(model: @sale, local: true, data: { controller: "sale-form" }) do |form| %>
-    <% if @sale.errors.any? %>
-        <div id="error_explanation">
-            <h2><%= pluralize(@sale.errors.count, "error") %> impide que esta venta se guarde:</h2>
-            <ul>
-            <% @sale.errors.full_messages.each do |message| %>
-                <li><%= message %></li>
+<div class="sale-container">
+
+    <div class="sale-data-container">
+
+        <%= form_with(model: @sale, url: admin_sales_path, method: :post, local: true) do |form| %>
+        <div class="field">
+            <%= form.label :realization_date, "Fecha de realización" %>
+            <%= form.date_field :realization_date, value: Date.current %>
+        </div>
+
+        <div class="field">
+            <%= form.label :employee_id, "Empleado" %>
+            <%= form.collection_select :employee_id, User.all, :id, :username, prompt: false, selected: current_user.id %>
+        </div>
+
+        <div class="field">
+            <%= form.label :customer_dni, "DNI del Cliente" %>
+            <%= form.text_field :customer_dni %>
+        </div>
+
+        <div class="field">
+            <%= form.label :customer_name, "Nombre del Cliente" %>
+            <%= form.text_field :customer_name %>
+        </div>
+
+        <div class="actions">
+            <%= form.submit "Crear Venta", class: "btn-submit" %>
+        </div>
+        <% end %>
+
+    </div>
+
+    <div class="product-list-container">
+
+        <%= form_with url: update_product_list_admin_sales_path, method: :post, local: true do |form| %>
+        <div class="field">
+            <%= form.label :product_id, "Producto" %>
+            <%= form.collection_select :product_id, @products, :id, 
+                ->(product) { "#{product.name} - #{product.size} (#{product.available_stock})" }, 
+                prompt: "Seleccione un producto" %>
+        </div>
+
+        <div class="field">
+            <%= form.label :amount_sold, "Cantidad vendida" %>
+            <%= form.number_field :amount_sold, min: 1, max: @products.map(&:available_stock).max %>
+        </div>
+
+        <div class="actions">
+            <%= form.submit "Agregar a la lista", class: "" %>
+        </div>
+        <% end %>
+
+        <%= form_with url: clear_product_list_admin_sales_path, method: :post, local: true do |f| %>
+            <%= f.submit "Vaciar lista", class: "" %>
+        <% end %>
+
+        <h2>Productos:</h2>
+        <% if !session[:product_list].present? %>
+        <p>No hay productos en la lista</p>
+        <% else %>
+        <div class="cart">
+            <% session[:product_list].each do |product| %>
+            <% product_data = Product.find_by(id: product["product_id"]) %>
+            <div class="product-item">
+                <%= image_tag product_data.images.first.variant(resize_to_limit: [50, 50]), class: "product-image" if product_data.images.any? %>
+                <div class="product-details">
+                    <p class="product-name"><%= product["amount_sold"] %> x <%= product_data.name %> - Talle <%= product_data.size %></p>
+                    <p class="product-price">$<%= product["sale_price"] %></p>
+                </div>
+            </div>
             <% end %>
-        </ul>
         </div>
-    <% end %>
-
-    <div class="field">
-        <%= form.label :realization_date %>
-        <%= form.date_field :realization_date %>
+        <% end %>
     </div>
 
-    <div class="field">
-        <%= form.label :customer_dni, "DNI del Cliente" %>
-        <%= form.text_field :customer_dni %>
-    </div>
+</div>
 
-    <div class="field">
-        <%= form.label :customer_name, "Nombre del Cliente" %>
-        <%= form.text_field :customer_name %>
-    </div>
-
-    <div class="field">
-        <%= form.label :employee_id, "Empleado" %>
-        <%= form.collection_select :employee_id, User.all, :id, :username %>
-    </div>
-
-    <h3>Productos</h3>
-    <div data-sale-form-target="productList">
-    <%= form.fields_for :product_sales do |product_sale_form| %>
-        <div class="nested-fields">
-            <div class="field">
-                <%= product_sale_form.label :product_id, "Producto" %>
-                <%= product_sale_form.collection_select :product_id, Product.all, :id, :name %>
-            </div>
-
-            <div class="field">
-                <%= product_sale_form.label :amount_sold, "Cantidad vendida" %>
-                <%= product_sale_form.number_field :amount_sold %>
-            </div>
-
-            <div class="field">
-                <%= product_sale_form.label :total_amount, "Monto total" %>
-                <%= product_sale_form.number_field :total_amount, step: 0.01 %>
-            </div>
-
-        </div>
-    <% end %>
-    <a href="#" data-action="click->sale-form#addProduct" data-sale-form-target="addButton" class="add_fields">Agregar producto</a>
-
-  <div class="actions">
-    <%= form.submit %>
-  </div>
-<% end %>
-
-<%= link_to 'Volver', sales_path %>
+<%= link_to 'Volver', admin_sales_path %>
 

@@ -14,7 +14,12 @@ Rails.application.routes.draw do
       end
     end
     resources :categories, only: [ :index, :create, :destroy ]
-    resources :sales
+    resources :sales do
+      collection do
+        post :update_product_list
+        post :clear_product_list
+      end
+    end
     resources :users
   end
 end

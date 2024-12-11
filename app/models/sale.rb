@@ -9,12 +9,4 @@ class Sale < ApplicationRecord
   validates :customer_dni, presence: true
   validates :customer_name, presence: true
   validates :employee, presence: true
-
-  validate :at_least_one_product_sold
-
-  private
-
-  def at_least_one_product_sold
-    errors.add(:base, "Debe tener al menos un producto") if product_sales.empty?
-  end
 end
