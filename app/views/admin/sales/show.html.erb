@@ -5,27 +5,26 @@
 <p><strong>ID:</strong> <%= @sale.id %></p>
 <p><strong>Fecha de realización:</strong> <%= @sale.realization_date %></p>
 <p><strong>Monto total:</strong> <%= number_to_currency(@sale.total_amount) %></p>
-<p><strong>Cliente:</strong> <%= @sale.costumer_name %> (<%= @sale.costumer_dni %>)</p>
+<p><strong>Cliente:</strong> <%= @sale.customer_name %> (<%= @sale.customer_dni %>)</p>
 <p><strong>Empleado:</strong> <%= @sale.employee.username %></p>
 
-<h3>Productos</h3>
-<table>
-  <thead>
-    <tr>
-      <th>Producto</th>
-      <th>Cantidad vendida</th>
-      <th>Monto total</th>
-    </tr>
-  </thead>
-  <tbody>
+<h2>Productos:</h2>
+<div class="cart">
     <% @sale.product_sales.each do |product_sale| %>
-      <tr>
-        <td><%= product_sale.product.name %></td>
-        <td><%= product_sale.amount_sold %></td>
-        <td><%= number_to_currency(product_sale.total_amount) %></td>
-      </tr>
+    <% product_data = Product.find_by(id: product_sale.product_id) %>
+    <div class="product-item">
+        <%= image_tag product_data.images.first.variant(resize_to_limit: [50, 50]), class: "product-image" if product_data.images.any? %>
+        <div class="product-details">
+            <p class="product-name"><%= product_sale.amount_sold %> x <%= product_data.name %> - Talle <%= product_data.size %></p>
+            <div class="product-price-div">
+              <p>Precio por unidad: </p><p class="product-price"> $<%= product_sale.sale_price %></p>
+            </div>
+            <div class="product-price-div">
+              <p>Precio total: </p><p class="product-price"> $<%= product_sale.sale_price * product_sale.amount_sold %></p>
+            </div>
+        </div>
+    </div>
     <% end %>
-  </tbody>
-</table>
+</div>
 
 <%= link_to 'Volver', admin_sales_path %>

@@ -26,7 +26,7 @@
           <td><%= sale.id %></td>
           <td><%= sale.realization_date %></td>
           <td><%= number_to_currency(sale.total_amount) %></td>
-          <td><%= sale.costumer_name %> (<%= sale.costumer_dni %>)</td>
+          <td><%= sale.customer_name %> (<%= sale.customer_dni %>)</td>
           <td><%= sale.employee.username %></td>
           <td>
             <%= link_to 'Ver', admin_sale_path(sale), class: "btn" %> |

@@ -69,7 +69,12 @@
                 <%= image_tag product_data.images.first.variant(resize_to_limit: [50, 50]), class: "product-image" if product_data.images.any? %>
                 <div class="product-details">
                     <p class="product-name"><%= product["amount_sold"] %> x <%= product_data.name %> - Talle <%= product_data.size %></p>
-                    <p class="product-price">$<%= product["sale_price"] %></p>
+                    <div class="product-price-div">
+                        <p>Precio por unidad: </p><p class="product-price"> $<%= product["sale_price"] %></p>
+                    </div>
+                    <div class="product-price-div">
+                        <p>Precio total: </p><p class="product-price"> $<%= product["sale_price"].to_i * product["amount_sold"].to_i %></p>
+                    </div>
                 </div>
             </div>
             <% end %>

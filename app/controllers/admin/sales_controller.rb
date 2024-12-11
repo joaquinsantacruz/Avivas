@@ -22,14 +22,7 @@ class Admin::SalesController < ApplicationController
 
   # POST /sales
   def create
-    puts "Empieza la creación de la venta"
-    puts "Empieza la creación de la venta"
-    puts "Empieza la creación de la venta"
-    puts "Empieza la creación de la venta"
-    puts "Empieza la creación de la venta"
-
     if session[:product_list].blank?
-      puts "No se han agregado productos a la venta."
       redirect_to new_admin_sale_path, alert: "No se han agregado productos a la venta."
       return
     end
@@ -38,11 +31,6 @@ class Admin::SalesController < ApplicationController
       product["amount_sold"].to_i * product["sale_price"].to_f
     end
 
-    puts "Antes de crear la venta"
-    puts "Antes de crear la venta"
-    puts "Antes de crear la venta"
-    puts "Antes de crear la venta"
-    puts "Antes de crear la venta"
     sale = Sale.new(
       realization_date: params[:sale][:realization_date] || Date.current,
       total_amount: total_amount,
@@ -50,11 +38,6 @@ class Admin::SalesController < ApplicationController
       customer_dni: params[:sale][:customer_dni],
       customer_name: params[:sale][:customer_name]
     )
-    puts "Despues de crear la venta"
-    puts "Despues de crear la venta"
-    puts "Despues de crear la venta"
-    puts "Despues de crear la venta"
-    puts "Despues de crear la venta"
 
     if sale.save
       session[:product_list].each do |product|
@@ -75,13 +58,6 @@ class Admin::SalesController < ApplicationController
 
       redirect_to admin_sales_path, notice: "Venta creada exitosamente."
     else
-      puts "Error al crear la venta. Por favor, verifica los datos ingresados."
-      puts "realization_date: #{params[:sale][:realization_date]}"
-      puts "total_amount: #{total_amount}"
-      puts "employee_id: #{params[:sale][:employee_id]}"
-      puts "customer_dni: #{params[:sale][:customer_dni]}"
-      puts "customer_name: #{params[:sale][:customer_name]}"
-
       redirect_to new_admin_sale_path, alert: "Error al crear la venta. Por favor, verifica los datos ingresados."
     end
   end
