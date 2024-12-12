@@ -1,11 +1,12 @@
 class Admin::UsersController < ApplicationController
   before_action :set_user, only: [ :show, :edit, :update, :destroy ]
-  # before_action :authenticate_user!
+  before_action :authenticate_user!
+  before_action :set_roles, only: [ :new, :create, :edit ]
   load_and_authorize_resource
 
   # GET /users
   def index
-    @users = User.all
+    @users = User.where.not("username LIKE ? OR email LIKE ?", "*%", "*%")
   end
 
   # GET /users/:id
@@ -49,8 +50,8 @@ class Admin::UsersController < ApplicationController
 
   # DELETE /users/:id
   def destroy
-    @user.destroy
-    redirect_to admin_user_path, notice: "Usuario eliminado exitosamente."
+    @user.update(username: "*#{@user.username}", email: "*#{@user.email}", password: SecureRandom.hex)
+    redirect_to admin_users_path, notice: "Usuario eliminado exitosamente."
   end
 
   private
@@ -63,5 +64,15 @@ class Admin::UsersController < ApplicationController
   # Filtros de parámetros permitidos para prevenir asignaciones masivas.
   def user_params
     params.require(:user).permit(:username, :email, :phone, :password, :entry_date, :role_ids)
+  end
+
+  def set_roles
+    @roles = if current_user.has_role?(:admin)
+               Role.all
+    elsif current_user.has_role?(:manager)
+               Role.where.not(name: "admin")
+    else
+               Role.none
+    end
   end
 end

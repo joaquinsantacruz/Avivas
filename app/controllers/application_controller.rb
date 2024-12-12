@@ -1,6 +1,26 @@
 class ApplicationController < ActionController::Base
   # Only allow modern browsers supporting webp images, web push, badges, import maps, CSS nesting, and CSS :has.
   allow_browser versions: :modern
+  rescue_from ActiveRecord::RecordNotFound, with: :render_404
+  rescue_from CanCan::AccessDenied, with: :render_401
+
+  private
+
+  def render_404
+    @error = {
+      code: "404",
+      message: "No se encontró la página solicitada"
+    }
+    render template: "error", status: :not_found
+  end
+
+  def render_401
+    @error = {
+      code: "401",
+      message: "No tienes permisos para acceder a esta página"
+    }
+    render template: "error", status: :unauthorized
+  end
 
   protected
 

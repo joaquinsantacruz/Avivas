@@ -1,0 +1,16 @@
+<% content_for :title, "Error #{@error[:code]}" %>
+
+<div class="error-container">
+    <div class="error-code"><%= @error[:code] %> </div>
+    <div class="error-message"><%= @error[:message] %> </div> <br> <br>
+    <div class="link-container">
+        <%= link_to 'Volver', root_path, class: "btn" %>
+    </div>
+</div>
+
+<style>
+    .container {
+        margin: 0;
+        padding: 0;
+    }
+</style>

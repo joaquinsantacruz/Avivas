@@ -37,12 +37,12 @@
         
         <div class="new-field">
             <%= form.label :entry_date %>
-            <%= form.date_field :entry_date %>
+            <%= form.date_field :entry_date, value: Date.current.in_time_zone('America/Argentina/Buenos_Aires').strftime("%Y-%m-%d") %>
         </div>
 
         <div class="new-field">
             <%= form.label :role, "Rol" %>
-            <%= form.collection_select :role_ids, Role.all.map { |r| [r.name.titleize, r.id] }, :second, :first, prompt: "Selecciona un rol" %>
+            <%= form.collection_select :role_ids, @roles.map { |r| [r.name.titleize, r.id] }, :second, :first, prompt: "Selecciona un rol" %>
         </div>
 
         <div class="new-actions">
