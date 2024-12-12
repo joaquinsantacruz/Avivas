@@ -10,13 +10,13 @@
     </p>
 
     <p>
-      <strong>Phone:</strong>
+      <strong>Telefono:</strong>
       <%= @user.phone %>
     </p>
 
     <p>
-      <strong>Entry Date:</strong>
-      <%= @user.entry_date %>
+      <strong>Fecha de ingreso:</strong>
+      <%= @user.entry_date.strftime("%d/%m/%Y") %>
     </p>
 
     <p>

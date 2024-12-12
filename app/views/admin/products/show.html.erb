@@ -10,7 +10,7 @@
         <p><strong>Precio:</strong> <%= @product.unit_price %></p>
         <p><strong>Tamaño:</strong> <%= @product.size %></p>
         <p><strong>Color:</strong> <%= @product.color %></p>
-        <p><strong>Fecha de Entrada:</strong> <%= @product.entry_date %></p>
+        <p><strong>Fecha de Entrada:</strong> <%= @product.entry_date.strftime("%d/%m/%Y") %></p>
         <p><strong>Categorías:</strong></p>
         <ul>
           <% @product.categories.each do |category| %>
