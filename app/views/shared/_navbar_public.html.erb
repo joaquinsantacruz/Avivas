@@ -2,14 +2,16 @@
     <nav class="navbar">
     <ul>
         <li><%= link_to 'AVIVAS', root_path %></li>
+        <% if @product.blank? %>
         <li>
-        <%= search_form_for @q, url: root_path do |f| %>
-        <div class="search-container">
-            <%= f.search_field :name_or_description_cont, placeholder: "Buscar productos...", class: "search-bar" %>
-            <%= f.submit "Buscar", class: "search-btn" %>
-        </div>
-        <% end %> 
+            <%= search_form_for @q, url: root_path do |f| %>
+            <div class="search-container">
+                <%= f.search_field :name_or_description_cont, placeholder: "Buscar productos...", class: "search-bar" %>
+                <%= f.submit "Buscar", class: "search-btn" %>
+            </div>
+            <% end %> 
         </li>
+        <% end %>
         <li>
         <% if user_signed_in? %>
             <%= link_to 'Admin', admin_products_path %></li>

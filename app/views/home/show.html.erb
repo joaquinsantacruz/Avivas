@@ -1,5 +1,4 @@
-<%= render 'shared/navbar_private' %>
-
+<%= render 'shared/navbar_public' %>
 <div class="login-main-container">
   <div class="login-container" style="width: 40%;">
     <div class="divisor">
@@ -10,7 +9,6 @@
         <p><strong>Precio:</strong> <%= @product.unit_price %></p>
         <p><strong>Tamaño:</strong> <%= @product.size %></p>
         <p><strong>Color:</strong> <%= @product.color %></p>
-        <p><strong>Fecha de Entrada:</strong> <%= @product.entry_date %></p>
         <p><strong>Categorías:</strong></p>
         <ul>
           <% @product.categories.each do |category| %>
@@ -21,8 +19,8 @@
       <div class="swiffy-slider" style="width: 50%;">
         <ul class="slider-container">
           <% @product.images.each do |image| %>
-            <li style="display: flex; justify-content: center;"><%= image_tag image.variant(resize_to_limit: [300, 300]) %>
-          <% end %></li>
+            <li style="display: flex; justify-content: center;"><%= image_tag image.variant(resize_to_limit: [300, 300]) %></li>
+          <% end %>
         </ul>
 
         <button type="button" class="slider-nav"></button>
@@ -37,8 +35,7 @@
       </div>
     </div>
 
-    <%= link_to 'Volver', admin_products_path, class: "btn" %>
-    <%= link_to 'Editar', edit_admin_product_path(@product), class: "btn" %>
 
+    <%= link_to 'Volver', root_path, class: "btn" %>
   </div>
 </div>

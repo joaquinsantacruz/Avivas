@@ -118,6 +118,10 @@
     text-decoration: none;
 }
 
+.btn:visited {
+    color: white;
+}
+
 .btn-primary:hover {
     background-color: #555;
 }

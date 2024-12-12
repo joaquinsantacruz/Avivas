@@ -6,6 +6,8 @@ class Ability
   def initialize(user)
     return unless user
 
+    can :show, Product
+
     if user.has_role?(:admin)
       can :manage, :all
     elsif user.has_role?(:manager)

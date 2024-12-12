@@ -7,7 +7,7 @@
 
     <%= form_with model: Category.new, url: admin_categories_path, local: true, id: "category-form" do |form| %>
       <div>
-        <%= form.text_field :name, placeholder: "Nombre de la categoría", required: true, class: "search-bar" %>
+        <%= form.text_field :name, placeholder: "Nombre de la categoría", required: true, class: "category-bar" %>
         <%= form.submit "Agregar", class: "btn btn-primary" %>
       </div>
     <% end %>
@@ -23,8 +23,8 @@
     <tbody>
       <% @categories.each do |category| %>
         <tr>
-          <td><%= category.name %></td>
-          <td>
+          <td style="text-align: center;"><%= category.name %></td>
+          <td style="justify-items: center;">
             <%= form_with(model: category, url: admin_category_path(category), method: :delete, local: true) do |form| %>
               <%= form.submit 'Eliminar', data: { confirm: '¿Estás seguro de que quieres eliminar esta categoría?' }, class: 'btn btn-danger' %>
             <% end %>

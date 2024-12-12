@@ -7,6 +7,7 @@ class Admin::SalesController < ApplicationController
   # GET /sales
   def index
     @sales = Sale.includes(:employee, :products).all
+    @sales = @sales.where("deleted_at IS NULL")
   end
 
   # GET /sales/1
@@ -114,8 +115,20 @@ class Admin::SalesController < ApplicationController
 
   # DELETE /sales/1
   def destroy
-    @sale.destroy
-    redirect_to sales_url, notice: "Venta eliminada exitosamente."
+    @sale = Sale.find(params[:id])
+
+    if @sale.deleted_at.present?
+      redirect_to admin_sales_path, alert: "Esta venta ya se encontraba cancelada."
+    end
+
+    @sale.update(deleted_at: Time.current)
+
+    @sale.product_sales.each do |product_sale|
+      product = Product.find(product_sale.product_id)
+      product.update(available_stock: product.available_stock + product_sale.amount_sold)
+    end
+
+    redirect_to admin_sales_path, notice: "Venta cancelada exitosamente."
   end
 
   private

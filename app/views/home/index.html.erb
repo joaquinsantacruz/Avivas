@@ -25,11 +25,13 @@
 <% else %>
     <% @products.each do |product| %>
         <div class="product">
-            <%= image_tag product.images.first.variant(resize_to_limit: [300, 300]) if product.images.any? %>
+            <%= link_to product_path(product.id) do %>
+                <%= image_tag product.images.first.variant(resize_to_limit: [300, 300]) if product.images.any? %>
+            <% end %>
             <h2><%= product.name %></h2>
             <p>Precio: <%= number_to_currency(product.unit_price) %></p>
             <p>Stock: <%= product.available_stock %></p>
         </div>
     <% end %>
-    </div>
 <% end %>
+</div>

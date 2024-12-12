@@ -12,7 +12,7 @@
     <thead>
       <tr>
         <th>ID</th>
-        <th>Fecha de realización</th>
+        <th>Fecha y hora</th>
         <th>Monto total</th>
         <th>Cliente</th>
         <th>Empleado</th>
@@ -24,14 +24,15 @@
       <% @sales.each do |sale| %>
         <tr>
           <td><%= sale.id %></td>
-          <td><%= sale.realization_date %></td>
+          <td><%= sale.realization_date.strftime("%Y-%m-%d %H:%M") %></td>
           <td><%= number_to_currency(sale.total_amount) %></td>
           <td><%= sale.customer_name %> (<%= sale.customer_dni %>)</td>
           <td><%= sale.employee.username %></td>
-          <td>
-            <%= link_to 'Ver', admin_sale_path(sale), class: "btn" %> |
-            <%= link_to 'Editar', edit_admin_sale_path(sale), class: "btn" %> |
-            <%= link_to 'Eliminar', admin_sale_path(sale), method: :delete, data: { confirm: '¿Estás seguro?' }, class: "btn" %>
+          <td class="actions">
+            <%= link_to 'Ver', admin_sale_path(sale), class: "btn" %>
+            <%= form_with(model: sale, url: admin_sale_path(sale), method: :delete, local: true) do |form| %>
+              <%= form.submit 'Cancelar', data: { confirm: '¿Estás seguro de que quieres cancelar esta venta?' }, class: 'delete-btn btn' %>
+            <% end %>
           </td>
         </tr>
       <% end %>

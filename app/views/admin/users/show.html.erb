@@ -1,25 +1,31 @@
 <%= render 'shared/navbar_private' %>
 
-<h1><%= @user.username %></h1>
+<div class="login-main-container">
+  <div class="login-container" style="width: 20%;">
+    <h1><%= @user.username %></h1>
 
-<p>
-  <strong>Email:</strong>
-  <%= @user.email %>
-</p>
+    <p>
+      <strong>Email:</strong>
+      <%= @user.email %>
+    </p>
 
-<p>
-  <strong>Phone:</strong>
-  <%= @user.phone %>
-</p>
+    <p>
+      <strong>Phone:</strong>
+      <%= @user.phone %>
+    </p>
 
-<p>
-  <strong>Entry Date:</strong>
-  <%= @user.entry_date %>
-</p>
+    <p>
+      <strong>Entry Date:</strong>
+      <%= @user.entry_date %>
+    </p>
 
-<p>
-    <p><strong>Rol:</strong> <%= @user.roles.first&.name&.titleize || "Sin rol asignado" %></p>
-</p>
+    <p>
+        <p><strong>Rol:</strong> <%= @user.roles.first&.name&.titleize || "Sin rol asignado" %></p>
+    </p>
 
-<%= link_to 'Editar', edit_admin_user_path(@user), class: "btn" %> |
-<%= link_to 'Volver', admin_users_path, class: "btn" %>
+    <div class="new-actions">
+      <%= link_to 'Volver', admin_users_path, class: "btn" %>
+      <%= link_to 'Editar', edit_admin_user_path(@user), class: "btn" %>
+    </div>
+  </div>
+</div>

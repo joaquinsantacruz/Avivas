@@ -1,7 +1,85 @@
 <%= render 'shared/navbar_private' %>
 
-<h1>Nuevo Producto</h1>
+<div class="new-form-container">
+  <%= form_with(model: @product, url: admin_products_path, local: true, class: "new-form") do |form| %>
+  <h1>Nuevo Producto</h1>
+    <% if @product.errors.any? %>
+      <div id="error_explanation">
+        <h2><%= pluralize(@product.errors.count, "error") %> impide que este producto se guarde:</h2>
+        <ul>
+          <% @product.errors.full_messages.each do |message| %>
+            <li><%= message %></li>
+          <% end %>
+        </ul>
+      </div>
+    <% end %>
 
-<%= render 'form', product: @product %>
+    <div class="new-field">
+      <%= form.label :name %>
+      <%= form.text_field :name %>
+    </div>
 
-<%= link_to 'Volver', admin_products_path, class: "btn" %>
+    <div class="new-field">
+      <%= form.label :description %>
+      <%= form.text_field :description %>
+    </div>
+
+    <div class="new-field">
+      <%= form.label :unit_price %>
+      <%= form.number_field :unit_price, step: "0.01" %>
+    </div>
+
+    <div class="new-field">
+      <%= form.label :available_stock %>
+      <%= form.number_field :available_stock %>
+    </div>
+
+    <div class="new-field">
+      <%= form.label :size %>
+      <%= form.text_field :size %>
+    </div>
+
+    <div class="new-field">
+      <%= form.label :color %>
+      <%= form.text_field :color %>
+    </div>
+
+    <div class="new-field">
+      <%= form.label :category_ids, "Categorías" %>
+      <%= form.collection_select :category_ids, Category.all, :id, :name, {}, { multiple: true } %>
+    </div>
+
+    <div class="new-field">
+      <%= form.label :entry_date %>
+      <%= form.date_field :entry_date %>
+    </div>
+
+    <% if @product.images.attached? %>
+    <div class="new-field">
+      <h3>Imágenes actuales</h3>
+      <ul>
+        <% @product.images.each do |image| %>
+          <li>
+            <%= image_tag(image.variant(resize_to_limit: [150, 150])) if image.variable? %>
+            <%= link_to "Eliminar", delete_image_admin_product_path(@product, image_id: image.id), method: :delete, data: { confirm: "¿Estás seguro de que deseas eliminar esta imagen?" } %>
+          </li>
+        <% end %>
+      </ul>
+    </div>
+    <% end %>
+
+
+    <div class="new-field">
+      <%= form.label :images, "Imágenes (máximo 5)" %>
+      <%= form.file_field :images, multiple: true, direct_upload: true %>
+    </div>
+
+
+    <div class="new-actions">
+      <%= link_to 'Volver', admin_products_path, class: "btn" %>
+      <%= form.submit "Crear producto", class: "btn" %>
+    </div>
+  <% end %>
+</div>
+
+

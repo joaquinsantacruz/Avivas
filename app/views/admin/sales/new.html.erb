@@ -1,88 +1,94 @@
 <%= render 'shared/navbar_private' %>
 
-<h1>Nueva Venta</h1>
 
 <div class="sale-container">
 
     <div class="sale-data-container">
 
-        <%= form_with(model: @sale, url: admin_sales_path, method: :post, local: true) do |form| %>
-        <div class="field">
+        <%= form_with(model: @sale, url: admin_sales_path, method: :post, local: true, class: "new-form") do |form| %>
+        <h1>Nueva Venta</h1>
+        <div class="new-field">
             <%= form.label :realization_date, "Fecha de realización" %>
-            <%= form.date_field :realization_date, value: Date.current %>
+            <%= form.datetime_local_field :realization_date, value: Time.current.in_time_zone('America/Argentina/Buenos_Aires').strftime("%Y-%m-%dT%H:%M") %>
         </div>
 
-        <div class="field">
+        <div class="new-field">
             <%= form.label :employee_id, "Empleado" %>
             <%= form.collection_select :employee_id, User.all, :id, :username, prompt: false, selected: current_user.id %>
         </div>
 
-        <div class="field">
+        <div class="new-field">
             <%= form.label :customer_dni, "DNI del Cliente" %>
             <%= form.text_field :customer_dni %>
         </div>
 
-        <div class="field">
+        <div class="new-field">
             <%= form.label :customer_name, "Nombre del Cliente" %>
             <%= form.text_field :customer_name %>
         </div>
 
-        <div class="actions">
-            <%= form.submit "Crear Venta", class: "btn-submit" %>
+        <div class="new-actions">
+            <%= form.submit "Crear Venta", class: "btn" %>
         </div>
         <% end %>
 
+        <div class="new-sale-volver-link">
+            <%= link_to 'Volver', admin_sales_path, class: "btn" %>
+        </div>
     </div>
 
     <div class="product-list-container">
 
-        <%= form_with url: update_product_list_admin_sales_path, method: :post, local: true do |form| %>
-        <div class="field">
+        <%= form_with url: update_product_list_admin_sales_path, method: :post, local: true, class: "new-form" do |form| %>
+        <div class="new-field">
             <%= form.label :product_id, "Producto" %>
             <%= form.collection_select :product_id, @products, :id, 
                 ->(product) { "#{product.name} - #{product.size} (#{product.available_stock})" }, 
                 prompt: "Seleccione un producto" %>
         </div>
 
-        <div class="field">
+        <div class="new-field">
             <%= form.label :amount_sold, "Cantidad vendida" %>
             <%= form.number_field :amount_sold, min: 1, max: @products.map(&:available_stock).max %>
         </div>
 
-        <div class="actions">
-            <%= form.submit "Agregar a la lista", class: "" %>
+        <div class="new-actions">
+            <%= form.submit "Agregar a la lista", class: "btn" %>
         </div>
         <% end %>
 
-        <%= form_with url: clear_product_list_admin_sales_path, method: :post, local: true do |f| %>
-            <%= f.submit "Vaciar lista", class: "" %>
-        <% end %>
 
-        <h2>Productos:</h2>
-        <% if !session[:product_list].present? %>
-        <p>No hay productos en la lista</p>
-        <% else %>
-        <div class="cart">
-            <% session[:product_list].each do |product| %>
-            <% product_data = Product.find_by(id: product["product_id"]) %>
-            <div class="product-item">
-                <%= image_tag product_data.images.first.variant(resize_to_limit: [50, 50]), class: "product-image" if product_data.images.any? %>
-                <div class="product-details">
-                    <p class="product-name"><%= product["amount_sold"] %> x <%= product_data.name %> - Talle <%= product_data.size %></p>
-                    <div class="product-price-div">
-                        <p>Precio por unidad: </p><p class="product-price"> $<%= product["sale_price"] %></p>
-                    </div>
-                    <div class="product-price-div">
-                        <p>Precio total: </p><p class="product-price"> $<%= product["sale_price"].to_i * product["amount_sold"].to_i %></p>
+        <div class="new-form">
+            <div class="add-products-header">
+            <h2>Productos:</h2>
+            <%= form_with url: clear_product_list_admin_sales_path, method: :post, local: true do |f| %>
+                <%= f.submit "Vaciar lista", class: "btn" %>
+            <% end %>
+            </div>
+            <% if !session[:product_list].present? %>
+            <p>No hay productos en la lista</p>
+            <% else %>
+            <div class="cart">
+                <% session[:product_list].each do |product| %>
+                <% product_data = Product.find_by(id: product["product_id"]) %>
+                <div class="product-item">
+                    <%= image_tag product_data.images.first.variant(resize_to_limit: [50, 50]), class: "product-image" if product_data.images.any? %>
+                    <div class="product-details">
+                        <p class="product-name"><%= product["amount_sold"] %> x <%= product_data.name %> - Talle <%= product_data.size %></p>
+                        <div class="product-price-div">
+                            <p>Precio por unidad: </p><p class="product-price"> $<%= product["sale_price"] %></p>
+                        </div>
+                        <div class="product-price-div">
+                            <p>Precio total: </p><p class="product-price"> $<%= product["sale_price"].to_i * product["amount_sold"].to_i %></p>
+                        </div>
                     </div>
                 </div>
+                <% end %>
             </div>
             <% end %>
         </div>
-        <% end %>
     </div>
 
 </div>
 
-<%= link_to 'Volver', admin_sales_path %>
 
