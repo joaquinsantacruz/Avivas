@@ -6,7 +6,7 @@ class Product < ApplicationRecord
 
   has_many_attached :images
 
-  validates :name, presence: true, length: { maximum: 50 }
+  validates :name, presence: true, length: { maximum: 255 }
   validates :unit_price, numericality: { greater_than_or_equal_to: 0 }
   validates :available_stock, numericality: { only_integer: true, greater_than_or_equal_to: 0 }
   validates :images, length: { maximum: 3, message: "Puedes subir un máximo de 3 imágenes" }

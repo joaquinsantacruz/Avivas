@@ -70,3 +70,5 @@ gem "devise", "~> 4.9"
 gem "ransack"
 
 gem "cancancan"
+
+gem "open-uri", "~> 0.5.0"
