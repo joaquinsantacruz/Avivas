@@ -82,6 +82,8 @@ Empleados:
 - Emails: `employee1@mail.com` | `employee2@mail.com`
 - Contraseña: `123465`
 
+### Para entrar al panel de administración se necesita ingresar desde la url "localhost:3000/admin" 
+
 ### Ejecucion del seeds.rb:
 ```bash
 $ rails db:seed
