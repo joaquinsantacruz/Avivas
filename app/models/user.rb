@@ -5,6 +5,8 @@ class User < ApplicationRecord
          :recoverable, :rememberable, :validatable
   rolify
 
+  scope :active, -> { where(deleted_at: nil) }
+
   validates :username, presence: true, uniqueness: true
   validates :email, presence: true, uniqueness: true
 

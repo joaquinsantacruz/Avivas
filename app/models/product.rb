@@ -14,6 +14,9 @@ class Product < ApplicationRecord
 
   validate :max_5_images
 
+  scope :active, -> { where(deleted_date: nil) }
+  scope :available, -> { where("available_stock > 0") }
+
   def self.ransackable_attributes(auth_object = nil)
     [ "available_stock", "color", "created_at", "deleted_date", "description", "entry_date", "id", "name", "size", "unit_price", "updated_at" ]
   end
@@ -27,8 +30,12 @@ class Product < ApplicationRecord
     self.update(deleted_date: Time.now)
   end
 
-  def restock(amount)
+  def add_stock(amount)
     self.update(available_stock: self.available_stock + amount)
+  end
+
+  def remove_stock(amount)
+    self.update(available_stock: self.available_stock - amount)
   end
 
   private

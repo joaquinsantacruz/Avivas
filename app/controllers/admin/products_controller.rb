@@ -5,8 +5,7 @@ class Admin::ProductsController < ApplicationController
 
   # GET /products
   def index
-    @products = Product.all
-    @products = @products.where.not("name LIKE ?", "*%")
+    @products = Product.active
   end
 
   # GET /products/1
@@ -21,7 +20,6 @@ class Admin::ProductsController < ApplicationController
 
   # POST /products
   def create
-    # Filtrar los IDs vacíos del parámetro category_ids
     category_ids = params[:product][:category_ids].reject(&:blank?)
 
     @product = Product.new(product_params)

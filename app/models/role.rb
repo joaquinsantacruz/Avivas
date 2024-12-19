@@ -11,4 +11,6 @@ class Role < ApplicationRecord
             allow_nil: true
 
   scopify
+
+  scope :without_admin, -> { where.not(name: "admin") }
 end

@@ -1,13 +1,12 @@
 # app/controllers/sales_controller.rb
 class Admin::SalesController < ApplicationController
-  before_action :set_sale, only: [ :show, :edit, :update, :destroy ]
+  before_action :set_sale, only: [ :show, :edit, :destroy ]
   before_action :authenticate_user!
   load_and_authorize_resource
 
   # GET /sales
   def index
-    @sales = Sale.includes(:employee, :products).all
-    @sales = @sales.where("deleted_at IS NULL")
+    @sales = Sale.active.includes(:employee, :products)
   end
 
   # GET /sales/1
@@ -18,7 +17,7 @@ class Admin::SalesController < ApplicationController
   def new
     @sale = Sale.new
     @sale.product_sales.build
-    @products = Product.where.not("name LIKE ?", "*%").where("available_stock > ?", 0)
+    @products = Product.active.available
   end
 
   # POST /sales
@@ -49,10 +48,7 @@ class Admin::SalesController < ApplicationController
           sale_price: product["sale_price"]
         )
 
-        product_record = Product.find(product["product_id"])
-        product_record.update(
-          available_stock: product_record.available_stock - product["amount_sold"].to_i
-        )
+        Product.find(product["product_id"]).remove_stock(product["amount_sold"].to_i)
       end
 
       session[:product_list] = nil
@@ -101,16 +97,6 @@ class Admin::SalesController < ApplicationController
   # GET /sales/1/edit
   def edit
     @products = Product.all
-  end
-
-  # PATCH/PUT /sales/1
-  def update
-    if @sale.update(sale_params)
-      redirect_to @sale, notice: "Venta actualizada exitosamente."
-    else
-      @products = Product.all
-      render :edit, status: :unprocessable_entity
-    end
   end
 
   # DELETE /sales/1

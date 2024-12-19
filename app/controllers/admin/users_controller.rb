@@ -1,12 +1,12 @@
 class Admin::UsersController < ApplicationController
   before_action :set_user, only: [ :show, :edit, :update, :destroy ]
-  before_action :authenticate_user!
   before_action :set_roles, only: [ :new, :create, :edit ]
+  before_action :authenticate_user!
   load_and_authorize_resource
 
   # GET /users
   def index
-    @users = User.where.not("username LIKE ? OR email LIKE ?", "*%", "*%")
+    @users = User.active
   end
 
   # GET /users/:id
@@ -66,7 +66,7 @@ class Admin::UsersController < ApplicationController
     @roles = if current_user.has_role?(:admin)
                Role.all
     elsif current_user.has_role?(:manager)
-               Role.where.not(name: "admin")
+               Role.without_admin
     else
                Role.none
     end

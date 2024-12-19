@@ -12,11 +12,13 @@ class Sale < ApplicationRecord
   validates :customer_name, presence: true
   validates :employee, presence: true
 
+  scope :active, -> { where(deleted_at: nil) }
+
   def logic_delete
     self.update(deleted_at: Time.current)
 
     self.product_sales.each do |product_sale|
-      Product.find(product_sale.product_id).restock(product_sale.amount_sold)
+      Product.find(product_sale.product_id).add_stock(product_sale.amount_sold)
     end
   end
 end
