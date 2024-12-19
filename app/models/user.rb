@@ -18,4 +18,9 @@ class User < ApplicationRecord
       add_role(role_name)
     end
   end
+
+  def logic_delete
+    self.update(password: SecureRandom.hex)
+    self.update(deleted_at: Time.current)
+  end
 end

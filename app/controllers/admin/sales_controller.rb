@@ -1,6 +1,6 @@
 # app/controllers/sales_controller.rb
 class Admin::SalesController < ApplicationController
-  before_action :set_sale, only: %i[show edit update destroy]
+  before_action :set_sale, only: [ :show, :edit, :update, :destroy ]
   before_action :authenticate_user!
   load_and_authorize_resource
 
@@ -115,19 +115,7 @@ class Admin::SalesController < ApplicationController
 
   # DELETE /sales/1
   def destroy
-    @sale = Sale.find(params[:id])
-
-    if @sale.deleted_at.present?
-      redirect_to admin_sales_path, alert: "Esta venta ya se encontraba cancelada."
-    end
-
-    @sale.update(deleted_at: Time.current)
-
-    @sale.product_sales.each do |product_sale|
-      product = Product.find(product_sale.product_id)
-      product.update(available_stock: product.available_stock + product_sale.amount_sold)
-    end
-
+    @sale.logic_delete
     redirect_to admin_sales_path, notice: "Venta cancelada exitosamente."
   end
 

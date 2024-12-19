@@ -35,8 +35,6 @@ class Admin::UsersController < ApplicationController
 
   # PATCH/PUT /users/:id
   def update
-    @user = User.find(params[:id])
-
     if params[:role].present?
       @user.assign_role(params[:role])
     end
@@ -50,18 +48,16 @@ class Admin::UsersController < ApplicationController
 
   # DELETE /users/:id
   def destroy
-    @user.update(username: "*#{@user.username}", email: "*#{@user.email}", password: SecureRandom.hex)
+    @user.logic_delete
     redirect_to admin_users_path, notice: "Usuario eliminado exitosamente."
   end
 
   private
 
-  # Método para obtener un usuario específico.
   def set_user
     @user = User.find(params[:id])
   end
 
-  # Filtros de parámetros permitidos para prevenir asignaciones masivas.
   def user_params
     params.require(:user).permit(:username, :email, :phone, :password, :entry_date, :role_ids)
   end

@@ -22,6 +22,15 @@ class Product < ApplicationRecord
     [ "categories", "images_attachments", "images_blobs", "product_sales", "sales" ]
   end
 
+  def logic_delete
+    self.update(available_stock: 0)
+    self.update(deleted_date: Time.now)
+  end
+
+  def restock(amount)
+    self.update(available_stock: self.available_stock + amount)
+  end
+
   private
 
   def max_5_images
